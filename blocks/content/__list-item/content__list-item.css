@@ -1,0 +1,6 @@
+.content__list-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    border-radius: 10px;
+}

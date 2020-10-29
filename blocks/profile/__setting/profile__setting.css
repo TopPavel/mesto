@@ -1,0 +1,29 @@
+.profile__setting {
+    width: 24px;
+    height: 24px;
+    background-color: transparent;
+    background-image: url("./../../../images/pensil.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 1px solid #FFFFFF;
+    box-sizing: border-box;
+    transition: opacity 0.2s;
+    outline: none;
+    padding: 0;
+    margin: 0;
+}
+
+.profile__setting:hover {
+    opacity: .7;
+}
+
+.profile__setting:active {
+    outline: none;
+}
+
+@media screen and (max-width: 767px) {
+    .profile__setting {
+        width: 18px;
+        height: 18px;
+    }
+}

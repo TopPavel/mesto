@@ -1,0 +1,20 @@
+.add-content {
+    min-width: 150px;
+    height: 50px;
+    box-sizing: border-box;
+    border: 2px solid #FFFFFF;
+    border-radius: 2px;
+    background-color: transparent;
+    outline: none;
+    transition: opacity 0.2s;
+}
+
+.add-content:hover {
+    opacity: .7;
+}
+
+@media screen and (max-width: 767px) {
+    .add-content {
+        width: 100%;
+    }
+}
