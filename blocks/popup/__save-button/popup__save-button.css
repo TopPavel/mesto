@@ -6,8 +6,11 @@
     color: #FFFFFF;
     outline: none;
     transition: opacity 0.2s;
+    cursor: pointer;
+    border: none;
+    border-radius: 2px;
 }
 
 .popup__save-button:hover {
-    opacity: .7;
+    opacity: .8;
 }
