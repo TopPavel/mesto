@@ -183,8 +183,8 @@ function like(likeItem) {
 
 function createPopupImage(image, title) {
     const popup = page.querySelector('#popup-image');
-    const popupImage = popup.querySelector('.popup-image__image');
-    popup.querySelector('.popup-image__title').textContent = title;
+    const popupImage = popup.querySelector('.popup__image');
+    popup.querySelector('.popup__title-image').textContent = title;
     popupImage.src = image.src;
 
     return popup;
