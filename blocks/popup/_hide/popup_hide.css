@@ -1,0 +1,15 @@
+.popup_hide {
+    opacity: 1;
+    animation: hide 0.6s 1;
+    animation-fill-mode: forwards;
+    transition: 0.3s;
+}
+
+@keyframes hide {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}

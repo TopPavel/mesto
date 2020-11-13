@@ -1,3 +1,21 @@
 .popup_opened {
     display: flex;
+    opacity: 0;
+    animation: show 0.6s 1;
+    animation-fill-mode: forwards;
+    transition: 0.3s;
 }
+
+@keyframes show {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/*
+тут я сделал через @keyframes т.к. если использовать :hover, в моменте когда браузер
+предлагает какие-то готовые поля в input row то попап "гаснет"
+ */

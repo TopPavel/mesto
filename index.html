@@ -8,7 +8,7 @@
 </head>
 <body class="page">
 <header class="header">
-    <img src="./images/logo.svg" alt="Логотип Место" class="header__logo">
+    <img alt="Логотип Место" class="header__logo" src="./images/logo.svg">
 </header>
 <main>
     <section class="profile">
@@ -25,66 +25,42 @@
         <button class="add-content" type="button"></button>
     </section>
     <section class="content">
-        <ul class="content__list">
-            <li class="content__list-item">
-                <img alt="Карачаевск" class="content__item-image" src="./images/kirill-pershin-karachaevsk.jpg">
-                <div class="content__item-description">
-                    <h2 class="content__item-title">Карачаевск</h2>
-                    <button class="content__like-button" type="button"></button>
-                </div>
-            </li>
-            <li class="content__list-item">
-                <img alt="Гора Эльбрус" class="content__item-image" src="./images/kirill-pershin-elbrus.jpg">
-                <div class="content__item-description">
-                    <h2 class="content__item-title">Гора Эльбрус</h2>
-                    <button class="content__like-button" type="button"></button>
-                </div>
-            </li>
-            <li class="content__list-item">
-                <img alt="Домбай" class="content__item-image" src="./images/kirill-pershin-dombay.jpg">
-                <div class="content__item-description">
-                    <h2 class="content__item-title">Домбай</h2>
-                    <button class="content__like-button" type="button"></button>
-                </div>
-            </li>
-            <li class="content__list-item">
-                <img alt="Гора Эльбрус" class="content__item-image" src="./images/kirill-pershin-elbrus.jpg">
-                <div class="content__item-description">
-                    <h2 class="content__item-title">Гора Эльбрус</h2>
-                    <button class="content__like-button" type="button"></button>
-                </div>
-            </li>
-            <li class="content__list-item">
-                <img alt="Домбай" class="content__item-image" src="./images/kirill-pershin-dombay.jpg">
-                <div class="content__item-description">
-                    <h2 class="content__item-title">Домбай</h2>
-                    <button class="content__like-button" type="button"></button>
-                </div>
-            </li>
-            <li class="content__list-item">
-                <img alt="Карачаевск" class="content__item-image" src="./images/kirill-pershin-karachaevsk.jpg">
-                <div class="content__item-description">
-                    <h2 class="content__item-title">Карачаево-Черкессия</h2>
-                    <button class="content__like-button" type="button"></button>
-                </div>
-            </li>
-        </ul>
+        <ul class="content__list"></ul>
     </section>
 </main>
 <footer class="footer">
     <p class="footer__copyright">&copy; Toporov Pavel</p>
 </footer>
-<div class="popup">
-    <div class="popup__content">
-        <h2 class="popup__title">Редактировать профиль</h2>
-        <form class="popup__edit-form" name="profile-form">
-            <input class="popup__input popup__input_title" type="text" name="input-name">
-            <input class="popup__input popup__input_spec" type="text" name="input-spec">
-            <button class="popup__save-button" type="submit">Сохранить</button>
-        </form>
+<div class="popup popup_dark" id="popup-image">
+    <div class="popup-image__content">
+        <img alt="" class="popup-image__image" src="">
+        <h2 class="popup-image__title"></h2>
         <button class="popup__close" type="button"></button>
     </div>
 </div>
+<template id="popup-template">
+    <div class="popup">
+        <div class="popup__content">
+            <h2 class="popup__title"></h2>
+            <form class="popup__edit-form" name="profile-form">
+                <input class="popup__input popup__input_one" name="input-name" required type="text">
+                <input class="popup__input popup__input_two" name="input-spec" required type="text">
+                <button class="popup__save-button" type="submit"></button>
+            </form>
+            <button class="popup__close" type="button"></button>
+        </div>
+    </div>
+</template>
+<template id="card-template">
+    <li class="content__list-item">
+        <img alt="" class="content__item-image" src="">
+        <button class="content__remove-button" type="button"></button>
+        <div class="content__item-description">
+            <h2 class="content__item-title"></h2>
+            <button class="content__like-button" type="button"></button>
+        </div>
+    </li>
+</template>
 <script src="./scripts/index.js"></script>
 </body>
 </html>

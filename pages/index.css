@@ -16,6 +16,8 @@
 @import "./../blocks/content/__list/content__list.css";
 @import "./../blocks/content/__list-item/content__list-item.css";
 @import "./../blocks/content/__item-Image/content__item-image.css";
+@import "./../blocks/content/__remove-button/content__remove-button.css";
+@import "./../blocks/content/__list-item/_remove/content__list-item_remove.css";
 @import "./../blocks/content/__item-description/content__item-description.css";
 @import "./../blocks/content/__item-title/content__item-title.css";
 @import "./../blocks/content/__item-like/content__item-like.css";
@@ -23,6 +25,7 @@
 @import "./../blocks/footer/footer.css";
 @import "./../blocks/footer/__copyright/footer__copyright.css";
 @import "./../blocks/popup/popup.css";
+@import "./../blocks/popup/_dark/popup_dakr.css";
 @import "./../blocks/popup/__title/popup__title.css";
 @import "./../blocks/popup/__edit-form/popup__edit-form.css";
 @import "./../blocks/popup/__input-row/popup__input-row.css";
@@ -31,3 +34,8 @@
 @import "./../blocks/popup/__content/popup__content.css";
 @import "./../blocks/popup/__close/popup__close.css";
 @import "./../blocks/popup/_opened/popup_opened.css";
+@import "./../blocks/popup/_hide/popup_hide.css";
+@import "./../blocks/popup-image/__content/popup-image__content.css";
+@import "./../blocks/popup-image/__title/popup-image__title.css";
+@import "./../blocks/popup-image/__image/popup-image__image.css";
+@import "./../blocks/content/_liked/content_liked.css";
