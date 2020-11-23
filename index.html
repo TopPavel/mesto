@@ -42,9 +42,11 @@
     <div class="popup">
         <div class="popup__content">
             <h2 class="popup__title"></h2>
-            <form class="popup__edit-form" name="profile-form">
-                <input class="popup__input popup__input_one" name="input-name" required type="text">
-                <input class="popup__input popup__input_two" name="input-spec" required type="text">
+            <form class="popup__edit-form" name="form">
+                <input class="popup__input" name="input1" id="input1" required type="text">
+                <span id="input1-error" class="popup__input-error">Необходимо заполнить данное поле</span>
+                <input class="popup__input" name="input2" id="input2" required type="text">
+                <span id="input2-error" class="popup__input-error">Необходимо заполнить данное поле</span>
                 <button class="popup__save-button" type="submit"></button>
             </form>
             <button class="popup__close" type="button"></button>
@@ -62,5 +64,6 @@
     </li>
 </template>
 <script src="./scripts/index.js"></script>
+<script src="./scripts/validate.js"></script>
 </body>
 </html>

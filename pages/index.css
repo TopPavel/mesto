@@ -39,3 +39,7 @@
 @import "../blocks/popup/__title-image/popup__title-image.css";
 @import "../blocks/popup/__image/popup__image.css";
 @import "./../blocks/content/_liked/content_liked.css";
+@import "./../blocks/popup/__input-error/popup__input-error.css";
+@import "./../blocks/popup/__input/_type/popup__input_type_error.css";
+@import "../blocks/popup/__input-error/popup__input-error_active.css";
+@import "../blocks/popup/__save-button/popup__save-button_inactive.css";

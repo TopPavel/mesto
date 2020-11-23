@@ -6,7 +6,6 @@ const profileTitleText = profile.querySelector('.profile__title-text');
 const profileSpec = profile.querySelector('.profile__specialisation');
 const cardList = page.querySelector('.content__list');
 const popupImage = page.querySelector('#popup-image');
-const popupImageCloseButton = popupImage.querySelector('.popup__close');
 const popupTemplate = document.querySelector('#popup-template').content.querySelector(".popup");
 const cardTemplate = document.querySelector('#card-template').content.querySelector(".content__list-item");
 const initialCards = [
@@ -45,51 +44,61 @@ function openPopupHandler(evt) {
     }
 }
 
-
 function openPopup(popup) {
     popup.classList.remove('popup_hide');
     popup.classList.add('popup_opened');
 
 }
 
-function closePopup(popup) {
+function closePopup(evt, popup) {
+    if (
+        evt.currentTarget.classList.contains('popup__edit-form')
+        || evt.target.classList.contains('popup__close')
+        || evt.target.classList.contains('popup')
+    ) {
+        popup.classList.add('popup_hide');
 
-    popup.classList.add('popup_hide');
-    setTimeout(() => {
-        popup.classList.remove('popup_opened');
-    }, 300);
+        setTimeout(() => {
+            popup.classList.remove('popup_opened');
+        }, 300);
+    }
 }
 
 function createProfileSettingPopup() {
     const popup = getPopupFromTemplate(popupTemplate);
-    setPopupCloseButton(popup);
+    setClosePopup(popup);
     setPopupInfo(popup, "setting-popup", "Редактировать профиль", "Сохранить");
     setProfileSettingForm(popup);
     page.append(popup);
     return popup;
 }
 
-
 function setProfileSettingForm(popup) {
     const popupEditForm = popup.querySelector('.popup__edit-form');
-    popupEditForm.querySelector('.popup__input_one').value = profileTitleText.textContent;
-    popupEditForm.querySelector('.popup__input_two').value = profileSpec.textContent;
+    const nameInput = popupEditForm.elements.input1;
+    nameInput.value = profileTitleText.textContent;
+    nameInput.minLength = 2;
+    nameInput.maxLength = 40;
+    const inputDesc = popupEditForm.elements.input2;
+    inputDesc.value = profileSpec.textContent;
+    inputDesc.minLength = 2;
+    inputDesc.maxLength = 200;
+    setFormEventListeners(popupEditForm);
     popupEditForm.addEventListener('submit', saveProfileChanges);
 }
 
-
-function saveProfileChanges(event) {
-    event.preventDefault();
+function saveProfileChanges(evt) {
+    evt.preventDefault();
     const popup = page.querySelector('#setting-popup');
     const popupEditForm = popup.querySelector('.popup__edit-form');
-    profileTitleText.textContent = popupEditForm.querySelector('.popup__input_one').value;
-    profileSpec.textContent = popupEditForm.querySelector('.popup__input_two').value;
-    closePopup(popup);
+    profileTitleText.textContent = popupEditForm.elements.input1.value;
+    profileSpec.textContent = popupEditForm.elements.input2.value;
+    closePopup(evt, popup)
 }
 
 function createAddContentPopup() {
     const popup = getPopupFromTemplate(popupTemplate);
-    setPopupCloseButton(popup);
+    setClosePopup(popup);
     setCreateContentForm(popup);
     setPopupInfo(popup, "add-content-popup", "Новое место", "Создать");
     page.append(popup);
@@ -97,21 +106,24 @@ function createAddContentPopup() {
     return popup;
 }
 
-
 function getPopupFromTemplate(template) {
     return template.cloneNode(true);
 }
 
-
-function setPopupCloseButton(popup) {
-    popup.querySelector('.popup__close').addEventListener('click', () => closePopup(popup));
+function setClosePopup(popup) {
+    popup.addEventListener('mousedown', (evt) => closePopup(evt, popup));
 }
-
 
 function setCreateContentForm(popup) {
     const popupEditForm = popup.querySelector('.popup__edit-form');
-    popupEditForm.querySelector('.popup__input_one').placeholder = "Название";
-    popupEditForm.querySelector('.popup__input_two').placeholder = "Ссылка на картинку";
+    const nameInput = popupEditForm.elements.input1;
+    nameInput.placeholder = "Название";
+    nameInput.minLength = 2;
+    nameInput.maxLength = 30;
+    const linkInput = popupEditForm.elements.input2;
+    linkInput.placeholder = "Ссылка на картинку";
+    linkInput.type = "url";
+    setFormEventListeners(popupEditForm);
     popupEditForm.addEventListener('submit', renderSomeOneCard);
 }
 
@@ -121,10 +133,9 @@ function setPopupInfo(popup, id, title, buttonText) {
     popup.querySelector('.popup__save-button').textContent = buttonText;
 }
 
-function clearInputRows(...rows) {
-    rows.forEach(e => e.value = '');
+function clearInputRows(form) {
+    form.reset()
 }
-
 
 function createCard(name, link) {
     const card = getCardFromTemplate(cardTemplate);
@@ -134,7 +145,6 @@ function createCard(name, link) {
 
     return card;
 }
-
 
 function getCardFromTemplate(template) {
     const card = template.cloneNode(true);
@@ -166,15 +176,17 @@ function removeCard(card) {
     setTimeout(() => card.remove(), 200);
 }
 
-function renderSomeOneCard(event) {
-    event.preventDefault();
+function renderSomeOneCard(evt) {
+    evt.preventDefault();
     const popup = page.querySelector('#add-content-popup');
     const popupEditForm = popup.querySelector('.popup__edit-form');
-    const name = popupEditForm.querySelector('.popup__input_one');
-    const link = popupEditForm.querySelector('.popup__input_two');
+    const button = popupEditForm.querySelector('.popup__save-button');
+    const name = popupEditForm.elements.input1;
+    const link = popupEditForm.elements.input1;
     addCard(createCard(name.value, link.value));
-    clearInputRows(name, link);
-    closePopup(popup);
+    closePopup(evt, popup);
+    clearInputRows(popupEditForm);
+    toggleButtonState(Array.from(popupEditForm.elements), button)
 }
 
 function like(likeItem) {
@@ -212,4 +224,4 @@ initialCustomCards();
 
 editProfileButton.addEventListener('click', openPopupHandler);
 addContentButton.addEventListener('click', openPopupHandler);
-popupImageCloseButton.addEventListener('click', () => closePopup(popupImage));
+popupImage.addEventListener('click', (evt) => closePopup(evt, popupImage));
