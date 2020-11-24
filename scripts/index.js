@@ -51,8 +51,10 @@ function openPopup(popup) {
 }
 
 function closePopup(evt, popup) {
+    console.log(evt.key)
     if (
         evt.currentTarget.classList.contains('popup__edit-form')
+        || evt.key === 'Escape'
         || evt.target.classList.contains('popup__close')
         || evt.target.classList.contains('popup')
     ) {
@@ -111,6 +113,7 @@ function getPopupFromTemplate(template) {
 }
 
 function setClosePopup(popup) {
+    page.addEventListener('keydown', (evt) => closePopup(evt, popup));
     popup.addEventListener('mousedown', (evt) => closePopup(evt, popup));
 }
 
@@ -148,7 +151,7 @@ function createCard(name, link) {
 
 function getCardFromTemplate(template) {
     const card = template.cloneNode(true);
-    card.id = cardList.children.length + 1;
+    card.id = `card-${cardList.children.length + 1}`;
 
     return card;
 }
@@ -224,4 +227,4 @@ initialCustomCards();
 
 editProfileButton.addEventListener('click', openPopupHandler);
 addContentButton.addEventListener('click', openPopupHandler);
-popupImage.addEventListener('click', (evt) => closePopup(evt, popupImage));
+setClosePopup(popupImage);

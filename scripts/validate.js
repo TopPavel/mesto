@@ -1,15 +1,32 @@
+/* Вопрос к ревьюеру: Зачем делать промежуточною функцию "enableValidation" если в моей реализации попапы добавляются на страницу динамически?
+(динамическое добавление попапов было зачтено в предыдущей работе)
+  Функция setFormEventListeners(form) прекрасно с этим справляется.
+  Именно для этого я и оставил комментарий вконце данного файла перед сдачей на проверку.
+  Хочется узнать недостатки моего решения, в отличии от того, что представлено в задании (обход всей стриницы, поиск форм, добавление валидации на поля ввода)
+  Буду очень рад обратной связи, спасибо))
+ */
+
+
+const validationSelectors = {
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__save-button',
+    submitButtonDisabledClass: 'popup__save-button_inactive',
+    inputErrorClass: 'popup__input_type_error',
+    errorClass: 'popup__input-error_active'
+}
+
 function showInputError(form, inputRow, errorMessage) {
-    inputRow.classList.add('popup__input_type_error');
+    inputRow.classList.add(validationSelectors.inputErrorClass);
     const formError = form.querySelector(`#${inputRow.id}-error`);
     formError.textContent = errorMessage;
-    formError.classList.add('popup__input-error_active');
+    formError.classList.add(validationSelectors.errorClass);
 }
 
 function hideInputError(form, inputRow) {
-    inputRow.classList.remove('popup__input_type_error');
+    inputRow.classList.remove(validationSelectors.inputErrorClass);
     const formError = form.querySelector(`#${inputRow.id}-error`);
     formError.textContent = '';
-    formError.classList.remove('popup__input-error_active');
+    formError.classList.remove(validationSelectors.errorClass);
 }
 
 function isValid(form, inputRow) {
@@ -21,8 +38,8 @@ function isValid(form, inputRow) {
 }
 
 function setFormEventListeners(form) {
-    const formInputs = Array.from(form.querySelectorAll('.popup__input'));
-    const button = form.querySelector('.popup__save-button');
+    const formInputs = Array.from(form.querySelectorAll(validationSelectors.inputSelector));
+    const button = form.querySelector(validationSelectors.submitButtonSelector);
     toggleButtonState(formInputs, button)
     formInputs.forEach(i => i.addEventListener('input', () => {
         isValid(form, i)
@@ -39,10 +56,10 @@ function hasInvalidInput(inputs) {
 function toggleButtonState(inputs, button) {
     if (hasInvalidInput(inputs)) {
         button.disabled = true
-        button.classList.add('popup__save-button_inactive');
+        button.classList.add(validationSelectors.submitButtonDisabledClass);
     } else {
         button.disabled = false
-        button.classList.remove('popup__save-button_inactive');
+        button.classList.remove(validationSelectors.submitButtonDisabledClass);
     }
 }
 
