@@ -25,7 +25,18 @@
         <button class="add-content" type="button"></button>
     </section>
     <section class="content">
-        <ul class="content__list"></ul>
+        <ul class="content__list">
+            <template id="card-template">
+                <li class="content__list-item">
+                    <img alt="Изображение места" class="content__item-image" src="#">
+                    <button class="content__remove-button" type="button"></button>
+                    <div class="content__item-description">
+                        <h2 class="content__item-title"></h2>
+                        <button class="content__like-button" type="button"></button>
+                    </div>
+                </li>
+            </template>
+        </ul>
     </section>
 </main>
 <footer class="footer">
@@ -52,16 +63,6 @@
             <button class="popup__close" type="button"></button>
         </div>
     </div>
-</template>
-<template id="card-template">
-    <li class="content__list-item">
-        <img alt="Изображение места" class="content__item-image" src="#">
-        <button class="content__remove-button" type="button"></button>
-        <div class="content__item-description">
-            <h2 class="content__item-title"></h2>
-            <button class="content__like-button" type="button"></button>
-        </div>
-    </li>
 </template>
 <script type="module" src="./scripts/index.js"></script>
 <script type="module" src="scripts/Card.js"></script>
