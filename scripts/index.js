@@ -52,13 +52,9 @@ const imagePopup = new ImagePopup(
 )
 
 function openPopupHandler(evt) {
-    console.log(evt.target.parentNode)
-    console.log(evt.currentTarget)
-    console.log(evt.target.parentNode.classList.contains('content__list-item'))
     if (evt.target.classList.contains('profile__setting')) {
         profilePopup.openPopup()
     } else if (evt.target.classList.contains('add-content')) {
-        console.log(contentPopup)
         contentPopup.openPopup()
     } else if (evt.target.classList.contains('content__item-image')) {
         const image = evt.target.parentNode.querySelector('.content__item-image').src;

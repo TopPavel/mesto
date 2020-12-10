@@ -50,7 +50,6 @@ export class PopupWithForm extends Popup {
     }
 
     _setProfileSettingForm(popup) {
-        console.log(popup.elements);
         const popupEditForm = popup.querySelector(`#${this._validationSelectors.formId}`);
         if (typeof (this._setInputRows) === 'function') {
             this._setInputRows();
