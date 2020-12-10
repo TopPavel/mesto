@@ -64,6 +64,7 @@ export class FormValidator {
 
 export class ValidationSelectors {
     constructor(
+        formId,
         inputSelector,
         submitButtonSelector,
         submitButtonDisabledClass,
@@ -75,6 +76,11 @@ export class ValidationSelectors {
         this._submitButtonDisabledClass = submitButtonDisabledClass;
         this._inputErrorClass = inputErrorClass;
         this._errorClass = errorClass;
+        this._formSelector = formId;
+    }
+
+    get formId() {
+        return this._formSelector;
     }
 
     get inputSelector() {

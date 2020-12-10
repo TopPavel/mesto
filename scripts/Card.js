@@ -1,5 +1,3 @@
-import {ImagePopup} from './Popup.js'
-
 export default class Card {
     constructor(name, link, template) {
         this._name = name;
@@ -32,7 +30,6 @@ export default class Card {
 
     _setCardImage(card, name, link) {
         const image = card.querySelector('.content__item-image');
-        image.addEventListener('click', () => new ImagePopup(image, name).openPopup());
         image.src = link;
         image.alt = name;
     }
