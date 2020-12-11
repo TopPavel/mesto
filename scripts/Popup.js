@@ -1,5 +1,3 @@
-import {FormValidator} from './FormValidator.js'
-
 class Popup {
     constructor(element) {
         this._element = element
@@ -8,36 +6,55 @@ class Popup {
     openPopup() {
         this._element.classList.remove('popup_hide');
         this._element.classList.add('popup_opened');
+        document.addEventListener('keydown', this.closePopupByEsc.bind(this));
     }
 
-    closePopup(evt) {
+    closePopup() {
+        this._element.classList.add('popup_hide');
+
+        setTimeout(() => {
+            this._element.classList.remove('popup_opened');
+        }, 300);
+
+        document.removeEventListener('keydown', this.closePopupByEsc.bind(this));
+        /*
+
+        Это не работает! Слушатель не удаляется.
+        Без bind(this) удаляется, но в таком случае не вызывается метод this.closePopup()
+        Нужна помощь.
+
+        */
+    }
+
+    closePopupByEsc(evt) {
+        if (evt.key === 'Escape') {
+            this.closePopup();
+        }
+    }
+
+    closePopupByPopup(evt) {
         if (
             evt.currentTarget.classList.contains('popup__edit-form')
             || evt.key === 'Escape'
             || evt.target.classList.contains('popup__close')
             || evt.target.classList.contains('popup')
         ) {
-            this._element.classList.add('popup_hide');
-
-            setTimeout(() => {
-                this._element.classList.remove('popup_opened');
-            }, 300);
+            this.closePopup()
         }
     }
 
     _setClosePopup(popup) {
-        document.querySelector('.page').addEventListener('keydown', (evt) => this.closePopup(evt, popup));
-        popup.addEventListener('mousedown', (evt) => this.closePopup(evt, popup));
+        popup.addEventListener('mousedown', (evt) => this.closePopupByPopup(evt));
     }
 }
 
 export class PopupWithForm extends Popup {
-    constructor(popupId, ValidationSelectors, submit, setInputRows) {
+    constructor(popupId, FormValidator, submit, formId) {
         super();
         this._popupId = popupId;
-        this._validationSelectors = ValidationSelectors;
+        this._formValidator = FormValidator;
         this._submit = submit;
-        this._setInputRows = setInputRows;
+        this.formId = formId;
         this._element = this._createPopup();
     }
 
@@ -50,11 +67,8 @@ export class PopupWithForm extends Popup {
     }
 
     _setProfileSettingForm(popup) {
-        const popupEditForm = popup.querySelector(`#${this._validationSelectors.formId}`);
-        if (typeof (this._setInputRows) === 'function') {
-            this._setInputRows();
-        }
-        new FormValidator(this._validationSelectors, popupEditForm).enableValidation()
+        const popupEditForm = popup.querySelector(`#${this.formId}`);
+        this._formValidator.enableValidation()
         popupEditForm.addEventListener('submit', (evt) => {
             evt.preventDefault();
             this._submit();

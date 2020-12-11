@@ -1,10 +1,9 @@
 import Card from './Card.js'
-import {initialCards} from './Data.js'
+import * as data from './Data.js'
 import {ImagePopup, PopupWithForm} from "./Popup.js";
-import {ValidationSelectors} from "./FormValidator.js";
+import {ValidationSelectors, FormValidator} from "./FormValidator.js";
 
-const profilePopup = new PopupWithForm(
-    'profile-popup',
+const profileValidator = new FormValidator(
     new ValidationSelectors(
         'profile-form',
         '.popup__input',
@@ -13,22 +12,10 @@ const profilePopup = new PopupWithForm(
         'popup__input_type_error',
         'popup__input-error_active'
     ),
-    () => {
-        const popupEditForm = document.querySelector('#profile-form')
-        document.querySelector('.profile__title-text').textContent = popupEditForm.elements.name.value;
-        document.querySelector('.profile__specialisation').textContent = popupEditForm.elements.desc.value;
-    },
-    () => {
-        const popupEditForm = document.querySelector('#profile-form')
-        const nameInput = popupEditForm.elements.name;
-        nameInput.value = document.querySelector('.profile__title-text').textContent;
-        const inputDesc = popupEditForm.elements.desc;
-        inputDesc.value = document.querySelector('.profile__specialisation').textContent;
-    }
+    data.profileForm
 )
 
-const contentPopup = new PopupWithForm(
-    'card-popup',
+const cardFormValidator = new FormValidator(
     new ValidationSelectors(
         'card-form',
         '.popup__input',
@@ -37,13 +24,31 @@ const contentPopup = new PopupWithForm(
         'popup__input_type_error',
         'popup__input-error_active'
     ),
+    data.cardForm
+)
+
+const profilePopup = new PopupWithForm(
+    'profile-popup',
+    profileValidator,
     () => {
-        const popupEditForm = document.querySelector('#card-form')
+        const popupEditForm = data.profileForm
+        data.profileName.textContent = popupEditForm.elements.name.value;
+        data.profileDesc.textContent = popupEditForm.elements.desc.value;
+    },
+    'profile-form'
+)
+
+const contentPopup = new PopupWithForm(
+    'card-popup',
+    cardFormValidator,
+    () => {
+        const popupEditForm = data.cardForm
         const name = popupEditForm.elements.title;
         const link = popupEditForm.elements.url;
         new Card(name.value, link.value, '#card-template').addCard()
         popupEditForm.reset()
-    }
+    },
+    'card-form'
 )
 const imagePopup = new ImagePopup(
     'popup-image',
@@ -53,18 +58,31 @@ const imagePopup = new ImagePopup(
 
 function openPopupHandler(evt) {
     if (evt.target.classList.contains('profile__setting')) {
-        profilePopup.openPopup()
+        openProfilePopup()
     } else if (evt.target.classList.contains('add-content')) {
         contentPopup.openPopup()
     } else if (evt.target.classList.contains('content__item-image')) {
-        const image = evt.target.parentNode.querySelector('.content__item-image').src;
-        const title = evt.target.parentNode.querySelector('.content__item-title').textContent
-        imagePopup.openPopup(title, image)
+        openImagePopup(evt)
     }
 }
 
+function openProfilePopup() {
+    const popupEditForm = data.profileForm
+    const nameInput = popupEditForm.elements.name;
+    const descInput = popupEditForm.elements.desc;
+    nameInput.value = data.profileName.textContent;
+    descInput.value = data.profileDesc.textContent;
+    profilePopup.openPopup()
+}
+
+function openImagePopup(evt) {
+    const image = evt.target.parentNode.querySelector('.content__item-image').src;
+    const title = evt.target.parentNode.querySelector('.content__item-title').textContent
+    imagePopup.openPopup(title, image)
+}
+
 (function initialCustomCards() {
-    initialCards.forEach(e => {
+    data.initialCards.forEach(e => {
         const card = new Card(e.name, e.link, '#card-template')
         card.addCard()
     });

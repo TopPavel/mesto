@@ -24,3 +24,8 @@ export const initialCards = [
         link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
     }
 ];
+
+export const profileForm = document.querySelector('#profile-form')
+export const cardForm = document.querySelector('#card-form')
+export const profileName = document.querySelector('.profile__title-text');
+export const profileDesc = document.querySelector('.profile__specialisation');
