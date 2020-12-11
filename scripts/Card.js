@@ -1,3 +1,5 @@
+import {cardContainer} from './Data.js'
+
 export default class Card {
     constructor(name, link, template) {
         this._name = name;
@@ -6,7 +8,7 @@ export default class Card {
     }
 
     addCard() {
-        document.querySelector('.content__list').prepend(this._createCard());
+        cardContainer.prepend(this._createCard());
     }
 
      _getCardFromTemplate() {
@@ -15,7 +17,7 @@ export default class Card {
             .content
             .querySelector(".content__list-item")
             .cloneNode(true);
-        card.id = `card-${document.querySelector('.content__list').children.length + 1}`;
+        card.id = `card-${cardContainer.children.length + 1}`;
         return card
     }
 
