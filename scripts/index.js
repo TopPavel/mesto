@@ -31,9 +31,8 @@ const profilePopup = new PopupWithForm(
     'profile-popup',
     profileValidator,
     () => {
-        const popupEditForm = data.profileForm
-        data.profileName.textContent = popupEditForm.elements.name.value;
-        data.profileDesc.textContent = popupEditForm.elements.desc.value;
+        data.profileName.textContent = data.profileForm.elements.name.value;
+        data.profileDesc.textContent = data.profileForm.elements.desc.value;
     },
     'profile-form'
 )
@@ -42,11 +41,10 @@ const contentPopup = new PopupWithForm(
     'card-popup',
     cardFormValidator,
     () => {
-        const popupEditForm = data.cardForm
-        const name = popupEditForm.elements.title;
-        const link = popupEditForm.elements.url;
+        const name = data.cardForm.elements.title;
+        const link = data.cardForm.elements.url;
         new Card(name.value, link.value, '#card-template').addCard()
-        popupEditForm.reset()
+        data.cardForm.reset()
     },
     'card-form'
 )
@@ -67,9 +65,8 @@ function openPopupHandler(evt) {
 }
 
 function openProfilePopup() {
-    const popupEditForm = data.profileForm
-    const nameInput = popupEditForm.elements.name;
-    const descInput = popupEditForm.elements.desc;
+    const nameInput = data.profileForm.elements.name;
+    const descInput = data.profileForm.elements.desc;
     nameInput.value = data.profileName.textContent;
     descInput.value = data.profileDesc.textContent;
     profilePopup.openPopup()

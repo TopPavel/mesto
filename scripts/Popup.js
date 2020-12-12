@@ -1,12 +1,13 @@
 class Popup {
     constructor(element) {
         this._element = element
+        this.closePopupByEsc = this.closePopupByEsc.bind(this);
     }
 
     openPopup() {
         this._element.classList.remove('popup_hide');
         this._element.classList.add('popup_opened');
-        document.addEventListener('keydown', this.closePopupByEsc.bind(this));
+        document.addEventListener('keydown', this.closePopupByEsc);
     }
 
     closePopup() {
@@ -16,14 +17,7 @@ class Popup {
             this._element.classList.remove('popup_opened');
         }, 300);
 
-        document.removeEventListener('keydown', this.closePopupByEsc.bind(this));
-        /*
-
-        Это не работает! Слушатель не удаляется.
-        Без bind(this) удаляется, но в таком случае не вызывается метод this.closePopup()
-        Нужна помощь.
-
-        */
+        document.removeEventListener('keydown', this.closePopupByEsc);
     }
 
     closePopupByEsc(evt) {
