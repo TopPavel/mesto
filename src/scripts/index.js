@@ -1,7 +1,17 @@
-import Card from './Card.js'
-import * as data from './Data.js'
-import {ImagePopup, PopupWithForm} from "./Popup.js";
-import {ValidationSelectors, FormValidator} from "./FormValidator.js";
+import './../pages/index.css';
+import Card from './components/Card.js'
+import {
+    cardContainerSelector,
+    cardForm,
+    initialCards,
+    profileDescSelector,
+    profileForm,
+    profileNameSelector
+} from "./components/Data.js"
+import {ImagePopup, PopupWithForm} from "./components/Popup.js";
+import {FormValidator, ValidationSelectors} from "./components/FormValidator.js";
+import Section from "./components/Section.js";
+import Profile from "./components/Profile.js";
 
 const profileValidator = new FormValidator(
     new ValidationSelectors(
@@ -12,8 +22,8 @@ const profileValidator = new FormValidator(
         'popup__input_type_error',
         'popup__input-error_active'
     ),
-    data.profileForm
-)
+    profileForm
+);
 
 const cardFormValidator = new FormValidator(
     new ValidationSelectors(
@@ -24,35 +34,44 @@ const cardFormValidator = new FormValidator(
         'popup__input_type_error',
         'popup__input-error_active'
     ),
-    data.cardForm
-)
+    cardForm
+);
+
+const profile = new Profile(profileNameSelector, profileDescSelector);
 
 const profilePopup = new PopupWithForm(
     'profile-popup',
     profileValidator,
     () => {
-        data.profileName.textContent = data.profileForm.elements.name.value;
-        data.profileDesc.textContent = data.profileForm.elements.desc.value;
+        profile.setProfileInfo(profileForm.elements.name.value, profileForm.elements.desc.value)
     },
     'profile-form'
-)
+);
 
 const contentPopup = new PopupWithForm(
     'card-popup',
     cardFormValidator,
     () => {
-        const name = data.cardForm.elements.title;
-        const link = data.cardForm.elements.url;
-        new Card(name.value, link.value, '#card-template').addCard()
-        data.cardForm.reset()
+        const name = cardForm.elements.title.value;
+        const link = cardForm.elements.url.value;
+        const card = new Card({name, link}, '#card-template').createCard();
+        const section = new Section({
+                items: [{name, link}],
+                renderer: () => section.addItem(card)
+            },
+            cardContainerSelector
+        );
+        section.render()
+        cardForm.reset();
     },
     'card-form'
-)
+);
+
 const imagePopup = new ImagePopup(
     'popup-image',
     '.popup__image',
     '.popup__title-image'
-)
+);
 
 function openPopupHandler(evt) {
     if (evt.target.classList.contains('profile__setting')) {
@@ -65,10 +84,8 @@ function openPopupHandler(evt) {
 }
 
 function openProfilePopup() {
-    const nameInput = data.profileForm.elements.name;
-    const descInput = data.profileForm.elements.desc;
-    nameInput.value = data.profileName.textContent;
-    descInput.value = data.profileDesc.textContent;
+    profileForm.elements.name.value = profile.name;
+    profileForm.elements.desc.value = profile.desc;
     profilePopup.openPopup()
 }
 
@@ -78,11 +95,14 @@ function openImagePopup(evt) {
     imagePopup.openPopup(title, image)
 }
 
-(function initialCustomCards() {
-    data.initialCards.forEach(e => {
-        const card = new Card(e.name, e.link, '#card-template')
-        card.addCard()
-    });
-})();
+const cardList = new Section({
+        items: initialCards,
+        renderer: (item) => {
+            cardList.addItem(new Card(item, '#card-template').createCard());
+        }
+    },
+    '.content__list');
+
+cardList.render();
 
 document.addEventListener('click', openPopupHandler);

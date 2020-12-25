@@ -5,3 +5,6 @@
 !.idea/codeStyles
 **/.gradle
 !.idea/codeStyles
+
+node_modules
+dist

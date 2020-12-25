@@ -1,33 +1,25 @@
-import {cardContainer} from './Data.js'
-
 export default class Card {
-    constructor(name, link, template) {
-        this._name = name;
-        this._link = link;
+    constructor(data, template) {
+        this._name = data.name;
+        this._link = data.link;
         this._template = template
     }
 
-    addCard() {
-        cardContainer.prepend(this._createCard());
-    }
-
-     _getCardFromTemplate() {
-        const card = document
-            .querySelector(this._template)
-            .content
-            .querySelector(".content__list-item")
-            .cloneNode(true);
-        card.id = `card-${cardContainer.children.length + 1}`;
-        return card
-    }
-
-    _createCard() {
+    createCard() {
         const card = this._getCardFromTemplate();
         this._setCardImage(card, this._name, this._link);
         this._addListenersOnCardButtons(card);
         card.querySelector('.content__item-title').textContent = this._name;
 
         return card;
+    }
+
+     _getCardFromTemplate() {
+         return document
+            .querySelector(this._template)
+            .content
+            .querySelector(".content__list-item")
+            .cloneNode(true);
     }
 
     _setCardImage(card, name, link) {

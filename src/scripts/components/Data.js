@@ -25,8 +25,8 @@ export const initialCards = [
     }
 ];
 
-export const profileForm = document.querySelector('#profile-form')
-export const cardForm = document.querySelector('#card-form')
-export const profileName = document.querySelector('.profile__title-text');
-export const profileDesc = document.querySelector('.profile__specialisation');
-export const cardContainer = document.querySelector('.content__list');
+export const profileForm = document.querySelector('#profile-form');
+export const cardForm = document.querySelector('#card-form');
+export const profileNameSelector = '.profile__title-text';
+export const profileDescSelector = '.profile__specialisation';
+export const cardContainerSelector = '.content__list';
