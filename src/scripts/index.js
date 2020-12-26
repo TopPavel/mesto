@@ -44,7 +44,7 @@ const profilePopup = new PopupWithForm(
     'profile-popup',
     profileValidator,
     () => {
-        profile.setProfileInfo(profileForm.elements.name.value, profileForm.elements.desc.value)
+        profile.setUserInfo(profileForm.elements.name.value, profileForm.elements.desc.value)
     },
     'profile-form'
 );
@@ -85,8 +85,9 @@ function openPopupHandler(evt) {
 }
 
 function openProfilePopup() {
-    profileForm.elements.name.value = profile.name;
-    profileForm.elements.desc.value = profile.desc;
+    const userInfo = profile.getUserInfo()
+    profileForm.elements.name.value = userInfo.name;
+    profileForm.elements.desc.value = userInfo.desc;
     profilePopup.openPopup()
 }
 

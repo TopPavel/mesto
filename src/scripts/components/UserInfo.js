@@ -4,15 +4,14 @@ export default class UserInfo{
         this._descSelector = descSelector;
     }
 
-    get name() {
-        return document.querySelector(this._nameSelector).textContent;
+    getUserInfo() {
+        return {
+            name: document.querySelector(this._nameSelector).textContent,
+            desc: document.querySelector(this._descSelector).textContent
+        }
     }
 
-    get desc() {
-        return document.querySelector(this._descSelector).textContent;
-    }
-
-    setProfileInfo(name, desc) {
+    setUserInfo(name, desc) {
         document.querySelector(this._nameSelector).textContent = name;
         document.querySelector(this._descSelector).textContent = desc;
     }
