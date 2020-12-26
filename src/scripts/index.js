@@ -8,10 +8,11 @@ import {
     profileForm,
     profileNameSelector
 } from "./components/Data.js"
-import {ImagePopup, PopupWithForm} from "./components/Popup.js";
+import PopupWithForm from "./components/PopupWithForm.js";
+import PopupWithImage from "./components/PopupWithImage.js";
 import {FormValidator, ValidationSelectors} from "./components/FormValidator.js";
 import Section from "./components/Section.js";
-import Profile from "./components/Profile.js";
+import UserInfo from "./components/UserInfo.js";
 
 const profileValidator = new FormValidator(
     new ValidationSelectors(
@@ -37,7 +38,7 @@ const cardFormValidator = new FormValidator(
     cardForm
 );
 
-const profile = new Profile(profileNameSelector, profileDescSelector);
+const profile = new UserInfo(profileNameSelector, profileDescSelector);
 
 const profilePopup = new PopupWithForm(
     'profile-popup',
@@ -67,7 +68,7 @@ const contentPopup = new PopupWithForm(
     'card-form'
 );
 
-const imagePopup = new ImagePopup(
+const imagePopup = new PopupWithImage(
     'popup-image',
     '.popup__image',
     '.popup__title-image'
