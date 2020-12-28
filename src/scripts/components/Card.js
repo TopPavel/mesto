@@ -1,8 +1,9 @@
 export default class Card {
-    constructor(data, template) {
+    constructor(data, template, handleCardClick) {
         this._name = data.name;
         this._link = data.link;
-        this._template = template
+        this._template = template;
+        this._handleCardClick = handleCardClick;
     }
 
     createCard() {
@@ -24,6 +25,7 @@ export default class Card {
 
     _setCardImage(card, name, link) {
         const image = card.querySelector('.content__item-image');
+        image.addEventListener('click', this._handleCardClick())
         image.src = link;
         image.alt = name;
     }

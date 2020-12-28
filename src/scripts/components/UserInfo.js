@@ -11,8 +11,8 @@ export default class UserInfo{
         }
     }
 
-    setUserInfo(name, desc) {
-        document.querySelector(this._nameSelector).textContent = name;
-        document.querySelector(this._descSelector).textContent = desc;
+    setUserInfo(data) {
+        document.querySelector(this._nameSelector).textContent = data.name;
+        document.querySelector(this._descSelector).textContent = data.desc;
     }
 }

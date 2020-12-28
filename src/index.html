@@ -41,20 +41,20 @@
 <footer class="footer">
     <p class="footer__copyright">&copy; Toporov Pavel</p>
 </footer>
-<div class="popup popup_dark" id="popup-image">
+<div class="popup popup_dark popup-image" id="popup-image">
     <div class="popup__image-content">
         <img alt="Изображение" class="popup__image" src="#">
         <h2 class="popup__title-image">Название картинки</h2>
         <button class="popup__close" type="button"></button>
     </div>
 </div>
-    <div class="popup" id="profile-popup">
+    <div class="popup profile-popup" id="profile-popup">
         <div class="popup__content">
             <h2 class="popup__title">Редактировать профиль</h2>
-            <form class="popup__edit-form" name="form" id="profile-form">
-                <input class="popup__input" name="name" id="name" required type="text" minlength="2" maxlength="40">
+            <form class="popup__edit-form profile-form" name="form" id="profile-form">
+                <input class="popup__input" name="name" id="name" required type="text" minlength="2" maxlength="40" placeholder="ФИО">
                 <span id="name-error" class="popup__input-error">Необходимо заполнить данное поле</span>
-                <input class="popup__input" name="desc" id="desc" required type="text" minlength="2" maxlength="200">
+                <input class="popup__input" name="desc" id="desc" required type="text" minlength="2" maxlength="200" placeholder="Описание/специализация">
                 <span id="desc-error" class="popup__input-error">Необходимо заполнить данное поле</span>
                 <button class="popup__save-button" type="submit">Сохранить</button>
             </form>
@@ -62,14 +62,14 @@
         </div>
     </div>
 
-        <div class="popup" id="card-popup">
+        <div class="popup card-popup" id="card-popup">
             <div class="popup__content">
                 <h2 class="popup__title">Новое место</h2>
-                <form class="popup__edit-form" name="form" id="card-form">
-                    <input class="popup__input" name="title" id="title" required type="text" minlength="2" maxlength="30" placeholder="Название">
+                <form class="popup__edit-form card-form" name="form" id="card-form">
+                    <input class="popup__input" name="name" id="title" required type="text" minlength="2" maxlength="30" placeholder="Название">
                     <span id="title-error" class="popup__input-error">Необходимо заполнить данное поле</span>
-                    <input class="popup__input" name="url" id="url" required type="url" placeholder="Ссылка на картинку">
-                    <span id="url-error" class="popup__input-error">Необходимо заполнить данное поле</span>
+                    <input class="popup__input" name="link" id="link" required type="url" placeholder="Ссылка на картинку">
+                    <span id="link-error" class="popup__input-error">Необходимо заполнить данное поле</span>
                     <button class="popup__save-button" type="submit">Создать</button>
                 </form>
                 <button class="popup__close" type="button"></button>
