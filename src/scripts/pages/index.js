@@ -70,7 +70,7 @@ function openProfilePopup() {
     }
     if (profileForm.elements.desc.value === userInfo.desc || profileForm.elements.desc.value.length === 0) {
         profileForm.elements.desc.value = userInfo.desc;
-        profileForm.elements.name.dispatchEvent(someInputEvent);
+        profileForm.elements.value.dispatchEvent(someInputEvent);
     }
     profilePopup.open()
 }
