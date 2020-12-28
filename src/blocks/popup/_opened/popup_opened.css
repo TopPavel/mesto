@@ -1,9 +1,10 @@
 .popup_opened {
     display: flex;
-    opacity: 0;
-    animation: show 0.6s 1;
-    animation-fill-mode: forwards;
-    transition: 0.3s;
+    opacity: 1;
+    visibility: visible;
+    /*animation: show 0.6s 1;*/
+    /*animation-fill-mode: forwards;*/
+    transition: all 0.6s;
 }
 
 @keyframes show {

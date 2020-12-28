@@ -6,20 +6,12 @@ export default class Popup {
     }
 
     open() {
-        this._element.classList.remove('popup_hide');
         this._element.classList.add('popup_opened');
         document.addEventListener('keydown', this._closePopupByEsc);
     }
 
     close() {
-        this._element.classList.add('popup_hide');
-        //Вопрос к ревьюверу:
-        // Если настаиваете на удалении этого класса из проекта, то как в таком случае сделать _корректную_ обратную анимацию при удалении класса 'popup_opened'?
-        // буду рад, если приложите ссылочку, где об этом почитать.
-        setTimeout(() => {
-            this._element.classList.remove('popup_opened');
-        }, 300);
-
+        this._element.classList.remove('popup_opened');
         document.removeEventListener('keydown', this._closePopupByEsc);
     }
 
