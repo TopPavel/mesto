@@ -25,14 +25,12 @@ export const initialCards = [
     }
 ];
 
-export const someInputEvent = new Event('input', {
-    'bubbles': true,
-    'cancelable': true
-});
 export const profilePopupSelector = '.profile-popup';
-export const profileFormSelector = '.profile-form';
+export const profileSettingButtonClass = 'profile__setting';
+export const addingContentButtonClass = 'add-content';
+export const imagePopupSelector = '.popup-image';
 export const cardPopupSelector = '.card-popup';
-export const cardFormSelector = '.card-form';
+export const cardTitleSelector = '.content__item-title';
 
 export const cardTemplateId = '#card-template'
 

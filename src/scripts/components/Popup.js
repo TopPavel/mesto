@@ -16,22 +16,18 @@ export default class Popup {
     }
 
     setEventListeners() {
-        this._element.addEventListener('mousedown', (evt) => this._closeByOverlay(evt));
-        this._element.querySelector('.popup__close').addEventListener('click', this.close.bind(this))
+        this._element.addEventListener('mousedown', this._closeByOverlay.bind(this));
     }
 
-    _closePopupByEsc(evt) {
+    _closePopupByEsc = (evt) => {
         if (evt.key === 'Escape') {
             this.close();
         }
     }
 
-    _closeByOverlay(evt) {
-        if (evt.target.classList.contains('popup')) {
-            /*Quote: После того как селекторы будут написаны по BEM достаточно будет оставить проверку только на класс popup*/
-            // Вопрос к ревьюеру:
-            // странно, почему я не могу обойтись одним слушателем для всего блока и за счет всплытия закрывать попап при нажатии по
-            // иконке закрытия, как было сделано раньше?
+    _closeByOverlay = (evt) => {
+        if (evt.target.classList.contains('popup')
+            || evt.target.classList.contains('popup__close')) {
             this.close();
         }
     }

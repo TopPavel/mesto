@@ -24,18 +24,7 @@
         <button class="add-content" type="button"></button>
     </section>
     <section class="content">
-        <ul class="content__list">
-            <template id="card-template">
-                <li class="content__list-item">
-                    <img alt="Изображение места" class="content__item-image" src="#">
-                    <button class="content__remove-button" type="button"></button>
-                    <div class="content__item-description">
-                        <h2 class="content__item-title"></h2>
-                        <button class="content__like-button" type="button"></button>
-                    </div>
-                </li>
-            </template>
-        </ul>
+        <ul class="content__list"></ul>
     </section>
 </main>
 <footer class="footer">
@@ -52,16 +41,17 @@
         <div class="popup__content">
             <h2 class="popup__title">Редактировать профиль</h2>
             <form class="popup__edit-form profile-form" name="form" id="profile-form">
-                <input class="popup__input" name="name" id="name" required type="text" minlength="2" maxlength="40" placeholder="ФИО">
+                <input class="popup__input" id="name" maxlength="40" minlength="2" name="name" placeholder="Имя"
+                       required type="text">
                 <span id="name-error" class="popup__input-error">Необходимо заполнить данное поле</span>
-                <input class="popup__input" name="desc" id="desc" required type="text" minlength="2" maxlength="200" placeholder="Описание/специализация">
+                <input class="popup__input" id="desc" maxlength="200" minlength="2" name="desc"
+                       placeholder="Вид деятельности" required type="text">
                 <span id="desc-error" class="popup__input-error">Необходимо заполнить данное поле</span>
                 <button class="popup__save-button" type="submit">Сохранить</button>
             </form>
             <button class="popup__close" type="button"></button>
         </div>
     </div>
-
         <div class="popup card-popup" id="card-popup">
             <div class="popup__content">
                 <h2 class="popup__title">Новое место</h2>
@@ -75,5 +65,15 @@
                 <button class="popup__close" type="button"></button>
             </div>
     </div>
+<template id="card-template">
+    <li class="content__list-item">
+        <img alt="Изображение места" class="content__item-image" src="#">
+        <button class="content__remove-button" type="button"></button>
+        <div class="content__item-description">
+            <h2 class="content__item-title"></h2>
+            <button class="content__like-button" type="button"></button>
+        </div>
+    </li>
+</template>
 </body>
 </html>
