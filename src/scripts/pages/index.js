@@ -1,31 +1,34 @@
 import '../../pages/index.css';
 /*
-* Комментарий ревьювера:
-*
-*  В данном файле отсутствуют:
-*    ̶1̶.̶С̶о̶з̶д̶а̶н̶и̶е̶ ̶э̶к̶з̶е̶м̶п̶л̶я̶р̶о̶в̶ ̶в̶а̶л̶и̶д̶а̶т̶о̶р̶а̶ ̶д̶л̶я̶ ̶к̶а̶ж̶д̶о̶г̶о̶ ̶п̶о̶п̶а̶п̶а̶ ̶и̶ ̶в̶к̶л̶ю̶ч̶е̶н̶и̶е̶ ̶в̶а̶л̶и̶д̶а̶ц̶и̶и̶.̶
-*    2. Включение слушателей для каждого попапа.
-*
-*Мой вопрос:
-*    Почему слушатели должны включаться именно в этом фале?
-*    Почему я не могу включать их при создании экземпляра в конструкторе класса?
+Я про то, что если в классе PopupWithForm в конструкторе добавить "переопределенное" включение слушателей,
+то при создании экземпляра этого класса слушатели будут установлены "автоматически" при инициализации.
+
+Пример: export default class PopupWithForm extends Popup {
+    constructor(onSubmit, popupSelector) {
+        super(popupSelector);
+        this._form = document.querySelector(popupSelector + ' form');
+        this._onSubmit = onSubmit;
+        this.setEventListeners = this.setEventListeners() ---> вот об этой строке идет речь
+    }
+
+    Поэтому спросил, почему так нельзя?
 * */
 import Card from './../components/Card.js'
 import {
+    addingContentButtonClass,
     cardContainerSelector,
     cardForm,
-    profileForm,
     cardPopupSelector,
     cardTemplateId,
+    cardTitleSelector,
+    imagePopupSelector,
     initialCards,
     profileDescSelector,
+    profileForm,
     profileNameSelector,
     profilePopupSelector,
-    imagePopupSelector,
-    cardTitleSelector,
-    validationConfig,
     profileSettingButtonClass,
-    addingContentButtonClass
+    validationConfig
 } from "../utils/constants.js"
 import PopupWithForm from "./../components/PopupWithForm.js";
 import PopupWithImage from "./../components/PopupWithImage.js";
@@ -34,8 +37,10 @@ import UserInfo from "./../components/UserInfo.js";
 import {FormValidator} from "../components/FormValidator.js";
 
 const profile = new UserInfo(profileNameSelector, profileDescSelector);
-new FormValidator(validationConfig, profileForm).enableValidation();
-new FormValidator(validationConfig, cardForm).enableValidation();
+const profileFormValidator = new FormValidator(validationConfig, profileForm);
+profileFormValidator.enableValidation();
+const contentFormValidator = new FormValidator(validationConfig, cardForm);
+contentFormValidator.enableValidation();
 
 const profilePopup = new PopupWithForm(
     (inputs) => {
@@ -47,8 +52,8 @@ const profilePopup = new PopupWithForm(
 
 const contentPopup = new PopupWithForm(
     (inputs) => {
-        initialCards.push({name: inputs.name, link: inputs.link})
-        cardList.render()
+        const card = createCard(inputs);
+        cardList.addItem(card)
         contentPopup.close()
     },
     cardPopupSelector
