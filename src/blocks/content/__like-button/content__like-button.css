@@ -1,7 +1,6 @@
 .content__like-button {
     min-width: 21px;
     height: 21px;
-    margin: 0 0 0 28px;
     background-color: transparent;
     background-image: url("./../../../images/like-icon.svg");
     background-repeat: no-repeat;

@@ -12,11 +12,14 @@
 <main>
     <section class="profile">
         <div class="profile__info">
-            <img alt="Аватар" class="profile__avatar" src="<%=require('./images/Jack.jpg')%>">
+            <div class="profile__avatar-container">
+                <img alt="Аватар" class="profile__avatar" src="#">
+                <span class="profile__avatar-hover"></span>
+            </div>
             <div class="profile__description">
                 <div class="profile__title">
-                    <h1 class="profile__title-text">Жак-Ив Кусто</h1>
-                    <p class="profile__specialisation">Исследователь океана</p>
+                    <h1 class="profile__title-text"></h1>
+                    <p class="profile__specialisation"></p>
                 </div>
                 <button class="profile__setting" type="button"></button>
             </div>
@@ -47,11 +50,24 @@
                 <input class="popup__input" id="desc" maxlength="200" minlength="2" name="desc"
                        placeholder="Вид деятельности" required type="text">
                 <span id="desc-error" class="popup__input-error">Необходимо заполнить данное поле</span>
-                <button class="popup__save-button" type="submit">Сохранить</button>
+                <button class="popup__save-button profile-button" type="submit">Сохранить</button>
             </form>
             <button class="popup__close" type="button"></button>
         </div>
     </div>
+<div class="popup avatar-popup" id="profile-avatar-popup">
+    <div class="popup__content">
+        <h2 class="popup__title">Обновить аватар</h2>
+        <form class="popup__edit-form avatar-form" id="profile-avatar-form" name="form">
+            <input class="popup__input" id="a-link" name="link" placeholder="Ссылка на картинку"
+                   required type="url">
+            <span class="popup__input-error" id="a-link-error">Необходимо заполнить данное поле</span>
+            <button class="popup__save-button popup__save-button_nonmargin avatar-button" type="submit">Сохранить
+            </button>
+        </form>
+        <button class="popup__close" type="button"></button>
+    </div>
+</div>
         <div class="popup card-popup" id="card-popup">
             <div class="popup__content">
                 <h2 class="popup__title">Новое место</h2>
@@ -60,18 +76,31 @@
                     <span id="title-error" class="popup__input-error">Необходимо заполнить данное поле</span>
                     <input class="popup__input" name="link" id="link" required type="url" placeholder="Ссылка на картинку">
                     <span id="link-error" class="popup__input-error">Необходимо заполнить данное поле</span>
-                    <button class="popup__save-button" type="submit">Создать</button>
+                    <button class="popup__save-button card-popup-button" type="submit">Создать</button>
                 </form>
                 <button class="popup__close" type="button"></button>
             </div>
     </div>
+<div class="popup card-delete-popup" id="card-delete-popup">
+    <div class="popup__content">
+        <h2 class="popup__title">Вы уверены?</h2>
+        <form class="popup__delete-form card-form" id="card-delete-form" name="form">
+            <input hidden id="cardId" name="cardId" required type="text">
+            <button class="popup__save-button popup__save-button_nonmargin card-delete-button" type="submit">Да</button>
+        </form>
+        <button class="popup__close" type="button"></button>
+    </div>
+</div>
 <template id="card-template">
     <li class="content__list-item">
         <img alt="Изображение места" class="content__item-image" src="#">
         <button class="content__remove-button" type="button"></button>
         <div class="content__item-description">
             <h2 class="content__item-title"></h2>
-            <button class="content__like-button" type="button"></button>
+            <div class="content__like">
+                <button class="content__like-button" type="button"></button>
+                <p class="content__like-count"></p>
+            </div>
         </div>
     </li>
 </template>

@@ -1,0 +1,8 @@
+.popup__delete-form {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 34px;
+}
