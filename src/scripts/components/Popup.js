@@ -16,7 +16,7 @@ export default class Popup {
     }
 
     setEventListeners() {
-        this._element.addEventListener('mousedown', this._closeByOverlay.bind(this));
+        this._element.addEventListener('mousedown', this._closeByOverlay);
     }
 
     _closePopupByEsc = (evt) => {

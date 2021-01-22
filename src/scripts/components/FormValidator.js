@@ -3,15 +3,19 @@ export class FormValidator {
         this._config = validationSelectors;
         this._form = form
         this._formInputs = Array.from(this._form.querySelectorAll(this._config.inputSelector));
+        this._submitButton = this._form.querySelector(this._config.submitButtonSelector);
+    }
+
+    get submitButton() {
+        return this._submitButton;
     }
 
     enableValidation() {
-        const button = this._form.querySelector(this._config.submitButtonSelector);
-        this._disableButtonAfterReset(this._form, button)
-        this._toggleButtonState(this._formInputs, button)
+        this._disableButtonAfterReset()
+        this._toggleButtonState()
         this._formInputs.forEach(i => i.addEventListener('input', () => {
             this._isValid(this._form, i)
-            this._toggleButtonState(this._formInputs, button)
+            this._toggleButtonState(this._formInputs, this._submitButton)
         }));
     }
 
@@ -43,28 +47,23 @@ export class FormValidator {
         })
     }
 
-    _toggleButtonState(inputs, button) {
-        if (this._hasInvalidInput(inputs)) {
-            this._disabledButton(button)
-        } else {
-            this._activateButton(button)
-        }
+    _toggleButtonState = () =>
+        this._hasInvalidInput(this._formInputs) ? this._disabledButton() : this._activateButton()
+
+    _disabledButton = () => {
+        this._submitButton.disabled = true
+        this._submitButton.classList.add(this._config.submitButtonDisabledClass);
     }
 
-    _disabledButton = (button) => {
-        button.disabled = true
-        button.classList.add(this._config.submitButtonDisabledClass);
+    _activateButton = () => {
+        this._submitButton.disabled = false
+        this._submitButton.classList.remove(this._config.submitButtonDisabledClass);
     }
 
-    _activateButton = (button) => {
-        button.disabled = false
-        button.classList.remove(this._config.submitButtonDisabledClass);
-    }
-
-    _disableButtonAfterReset(form, button) {
-        form.addEventListener('reset', () => {
-                this._disabledButton(button)
-                this._formInputs.forEach(i => this._hideInputError(form, i))
+    _disableButtonAfterReset() {
+        this._form.addEventListener('reset', () => {
+                this._disabledButton(this._submitButton)
+                this._formInputs.forEach(i => this._hideInputError(this._form, i))
             }
         );
     }

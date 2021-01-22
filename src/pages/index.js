@@ -1,11 +1,11 @@
-import '../../pages/index.css';
-import Card from './../components/Card.js'
+import './index.css';
+import Card from './../scripts/components/Card.js'
 import {
     addingContentButtonClass,
     avatarButtonSettingClass,
     avatarForm,
     avatarPopupSelector,
-    avatarSubmitButtonClass,
+    likedContentClass,
     cardContainerSelector,
     cardDeleteForm,
     cardForm,
@@ -20,16 +20,17 @@ import {
     profileNameSelector,
     profilePopupSelector,
     profileSettingButtonClass,
-    profileSubmitButtonClass,
-    validationConfig
-} from "../utils/constants.js"
-import PopupWithForm from "./../components/PopupWithForm.js";
-import PopupWithImage from "./../components/PopupWithImage.js";
-import Section from "./../components/Section.js";
-import UserInfo from "./../components/UserInfo.js";
-import {FormValidator} from "../components/FormValidator.js";
-import Api from "../components/Api.js";
-import {cardSubmitButtonClass, deleteCardSubmitButtonClass, myUserId} from "../utils/constants";
+    validationConfig,
+    deleteCardSubmitButtonElement,
+    myUserId
+} from "../scripts/utils/constants.js"
+import PopupWithForm from "./../scripts/components/PopupWithForm.js";
+import PopupWithImage from "./../scripts/components/PopupWithImage.js";
+import Section from "./../scripts/components/Section.js";
+import UserInfo from "./../scripts/components/UserInfo.js";
+import {FormValidator} from "../scripts/components/FormValidator.js";
+import Api from "../scripts/components/Api.js";
+import PopupDelete from "../scripts/components/PopupDelete.js";
 
 const api = new Api({
     baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-19',
@@ -52,94 +53,62 @@ profileFormValidator.enableValidation();
 const contentFormValidator = new FormValidator(validationConfig, cardForm);
 contentFormValidator.enableValidation();
 const avatarFormValidator = new FormValidator(validationConfig, avatarForm);
-avatarFormValidator.enableValidation()
+avatarFormValidator.enableValidation();
 
 const profilePopup = new PopupWithForm(
     (inputs) => {
-        document.querySelector(profileSubmitButtonClass).textContent = 'Сохранение...'
+        profileFormValidator.submitButton.textContent = 'Сохранение...'
         api.setUserInfo(inputs)
-            .then((res) => {
-                    if (res.ok) {
-                        return res.json();
-                    }
-
-                    return Promise.reject(`Ошибка: ${res.status}`)
-                }
-            ).then((data) => {
-            profile.setUserInfo({name: data.name, desc: data.about, avatar: data.avatar})
-            profilePopup.close()
-        })
+            .then((data) => {
+                profile.setUserInfo({name: data.name, desc: data.about, avatar: data.avatar})
+                profilePopup.close()
+            })
             .catch((err) => {
                 console.log(err);
             })
-            .finally(() => document.querySelector(profileSubmitButtonClass).textContent = 'Сохранить');
+            .finally(() => profileFormValidator.submitButton.textContent = 'Сохранить');
     },
     profilePopupSelector
 );
 
 const avatarPopup = new PopupWithForm(
     (inputs) => {
-        document.querySelector(avatarSubmitButtonClass).textContent = 'Сохранение...'
+        avatarFormValidator.submitButton.textContent = 'Сохранение...'
         api.setAvatar(inputs.link)
-            .then((res) => {
-                    if (res.ok) {
-                        return res.json();
-                    }
-
-                    return Promise.reject(`Ошибка: ${res.status}`)
-                }
-            )
             .then((data) => {
-                document.querySelector(profileAvatarSelector).src = data.avatar
+                profile.setUserInfo({name: data.name, desc: data.about, avatar: data.avatar})
                 avatarPopup.close()
             })
             .catch((err) => {
                 console.log(err);
             })
-            .finally(() => document.querySelector(avatarSubmitButtonClass).textContent = 'Сохранить');
+            .finally(() => avatarFormValidator.submitButton.textContent = 'Сохранить');
     },
     avatarPopupSelector
 );
 
 
-const deleteCardPopup = new PopupWithForm(
-    (input) => {
-        document.querySelector(deleteCardSubmitButtonClass).textContent = 'Удаление...'
-        api.deleteCard(input)
-            .then((res) => {
-                    if (res.ok) {
-                        return res.json();
-                    }
-
-                    return Promise.reject(`Ошибка: ${res.status}`)
-                }
-            )
+const deleteCardPopup = new PopupDelete(
+    (data) => {
+        deleteCardSubmitButtonElement.textContent = 'Удаление...'
+        api.deleteCard(data)
             .then(() => {
-                const card = document.getElementById(`${input.cardId}`)
-                card.classList.add('content__list-item_remove');
-                setTimeout(() => card.remove(), 200);
+                data.element.classList.add('content__list-item_remove');
+                setTimeout(() => data.element.remove(), 200);
                 deleteCardPopup.close()
             })
             .catch((err) => {
                 console.log(err);
             })
-            .finally(() => document.querySelector(deleteCardSubmitButtonClass).textContent = 'Да');
+            .finally(() => deleteCardSubmitButtonElement.textContent = 'Да');
     },
     deleteCardPopupSelector
 )
 
 const contentPopup = new PopupWithForm(
     (inputs) => {
-        document.querySelector(cardSubmitButtonClass).textContent = 'Сохранение...'
+        contentFormValidator.submitButton.textContent = 'Сохранение...'
         api.createSomeOneCards(inputs)
-            .then((res) => {
-                    if (res.ok) {
-                        return res.json();
-                    }
-
-                    return Promise.reject(`Ошибка: ${res.status}`)
-                }
-            )
             .then((data) => {
                 cardList.addItem(createCard(data), true)
                 contentPopup.close()
@@ -147,7 +116,7 @@ const contentPopup = new PopupWithForm(
             .catch((err) => {
                 console.log(err);
             })
-            .finally(() => document.querySelector(cardSubmitButtonClass).textContent = 'Сохранить');
+            .finally(() => contentFormValidator.submitButton.textContent = 'Сохранить');
     },
     cardPopupSelector
 );
@@ -162,24 +131,20 @@ function createCard(data) {
         (evt) => openImagePopup.bind(evt),
         () => {
             cardDeleteForm.elements.cardId.value = data._id
-            deleteCardPopup.open()
+            deleteCardPopup.open(card)
         },
         () => api.likeCard(card._id)
-            .then((res) => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
             .then(data => {
-                const cardElement = document.getElementById(`${data._id}`)
-                cardElement.querySelector('.content__like-count').textContent = data.likes.length;
-                cardElement.querySelector('.content__like-button').classList.add('content_liked')
+                card.likeCount.textContent = data.likes.length;
+                card.likeButton.classList.add(likedContentClass)
             })
             .catch((err) => {
                 console.log(err);
             }),
         () => api.unlikeCard(card._id)
-            .then((res) => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
             .then((data) => {
-                const cardElement = document.getElementById(`${data._id}`)
-                cardElement.querySelector('.content__like-count').textContent = data.likes.length;
-                cardElement.querySelector('.content__like-button').classList.remove('content_liked')
+                card.likeCount.textContent = data.likes.length;
+                card.likeButton.classList.remove(likedContentClass)
             })
             .catch((err) => {
                 console.log(err);
@@ -225,7 +190,6 @@ deleteCardPopup.setEventListeners();
 avatarPopup.setEventListeners()
 
 api.getUserInfo()
-    .then((res) => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
     .then((data) => {
         profile.setUserInfo({name: data.name, desc: data.about, avatar: data.avatar})
     })
@@ -234,7 +198,6 @@ api.getUserInfo()
     });
 
 api.getInitialCards()
-    .then((res) => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
     .then((data) => {
         cardList.render(data)
     })

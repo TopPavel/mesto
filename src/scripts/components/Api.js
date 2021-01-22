@@ -9,6 +9,7 @@ export default class Api {
             method: 'GET',
             headers: this.headers
         })
+            .then(this._checkResponse)
     }
 
     createSomeOneCards(data) {
@@ -20,6 +21,7 @@ export default class Api {
                 link: data.link
             })
         })
+            .then(this._checkResponse)
     }
 
     getUserInfo() {
@@ -27,6 +29,7 @@ export default class Api {
             method: 'GET',
             headers: this.headers
         })
+            .then(this._checkResponse)
     }
 
     setUserInfo(data) {
@@ -38,13 +41,15 @@ export default class Api {
                 about: data.desc
             })
         })
+            .then(this._checkResponse)
     }
 
     deleteCard(data) {
-        return fetch(`${this.baseUrl}/cards/${data.cardId}`, {
+        return fetch(`${this.baseUrl}/cards/${data._id}`, {
             method: 'DELETE',
             headers: this.headers
         })
+            .then(this._checkResponse)
     }
 
     likeCard(cardId) {
@@ -52,6 +57,7 @@ export default class Api {
             method: 'PUT',
             headers: this.headers
         })
+            .then(this._checkResponse)
     }
 
     unlikeCard(cardId) {
@@ -59,6 +65,7 @@ export default class Api {
             method: 'DELETE',
             headers: this.headers
         })
+            .then(this._checkResponse)
     }
 
     setAvatar(link) {
@@ -69,5 +76,8 @@ export default class Api {
                 avatar: link
             })
         })
+            .then(this._checkResponse)
     }
+
+    _checkResponse = (res) => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
 }
